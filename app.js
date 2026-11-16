@@ -16,7 +16,7 @@ const state = {
   latrunculinA: false, // Latrunculin A pharmacological F-actin depolymerizer
   
   // Scratch assay state
-  scratchTimeHours: 0, // 0 to 24 hours
+  scratchTimeHours: 0, // 0 to 48 hours (matching 48-h incubation in Wang et al., 2025)
   scratchPlaying: false,
   scratchSpeed: 1, // playback speed
   
@@ -551,9 +551,9 @@ function initScratchCanvas() {
   // Animation Loop for Scratch
   function renderScratch() {
     if (state.scratchPlaying) {
-      state.scratchTimeHours += 0.05 * state.scratchSpeed;
-      if (state.scratchTimeHours >= 24) {
-        state.scratchTimeHours = 24;
+      state.scratchTimeHours += 0.08 * state.scratchSpeed;
+      if (state.scratchTimeHours >= 48) {
+        state.scratchTimeHours = 48;
         state.scratchPlaying = false;
         updateScratchControlsUI();
       }

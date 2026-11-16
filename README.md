@@ -38,7 +38,7 @@ This interactive platform demonstrates the mechanical and biochemical circuitry 
 
 ### 2. Virtual In Vitro Scratch / Wound Healing Assay
 - Recreates the 500 μm Ibidi insert wound healing migration experiments (Figures 2A, 2C, 4C, 6B).
-- Animated cell monolayer closure dynamics over 0 to 24 hours.
+- Animated cell monolayer closure dynamics over 0 to 48 hours (matching the 48-h hydrogel incubation period in Wang et al., 2025).
 - Real-time gap measurement, 200 μm calibrated scale bar, and live wound closure percentage calculation matching empirical data (e.g. 15.6% @ 7 kPa vs 31.8% @ 53 kPa in MHCC-97H).
 
 ### 3. Virtual Leica TCS SP8 DIVE Confocal Microscope
