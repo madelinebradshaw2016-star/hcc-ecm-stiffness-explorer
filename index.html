@@ -245,41 +245,55 @@
           </div>
         </div>
 
-        <!-- Center Column: Live Animated Mechanobiology Canvas -->
-        <div class="canvas-container">
-          <canvas id="pathwayCanvas"></canvas>
-          
-          <div class="canvas-overlay-badges">
-            <div class="canvas-badge">
+        <!-- Center Column: Live Animated Mechanobiology Canvas with External Keys -->
+        <div class="simulation-center-card">
+          <!-- Top Simulation Status Bar (Cleanly above the canvas) -->
+          <div class="simulation-top-bar">
+            <div class="sim-status-pill">
               <span class="legend-dot" style="background: #38bdf8;"></span>
-              Substrate: <strong id="stiffnessBadge" style="margin-left: 4px;">53 kPa</strong>
+              <span>Substrate Elasticity: <strong id="stiffnessBadge">53 kPa</strong></span>
             </div>
-            <div class="canvas-badge">
+            <div class="sim-status-pill">
               <span class="legend-dot" style="background: #f43f5e;"></span>
-              Dynamic Mechanotransduction Axis
+              <span>Integrin β1 ➔ Plectin ➔ F-actin Axis</span>
             </div>
           </div>
 
-          <div class="canvas-legend">
-            <div class="legend-item">
-              <span class="legend-dot" style="background: #38bdf8;"></span>
-              <span>Integrin β1</span>
+          <!-- Unobstructed Canvas Container -->
+          <div class="canvas-container">
+            <canvas id="pathwayCanvas"></canvas>
+          </div>
+
+          <!-- Dedicated Simulation Keys & Legend Bar (Cleanly below the canvas) -->
+          <div class="simulation-legend-bar">
+            <div class="legend-header">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-cyan);">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+              <span>Keys / Legend:</span>
             </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background: #a855f7;"></span>
-              <span>Plectin (~500 kDa)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background: #f43f5e;"></span>
-              <span>F-actin Stress Fibers</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background: #2dd4bf;"></span>
-              <span>Vimentin IF Network</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot" style="background: #fbbf24;"></span>
-              <span>LOX Crosslinks</span>
+            <div class="legend-items-wrap">
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #38bdf8;"></span>
+                <span>Integrin β1</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #a855f7;"></span>
+                <span>Plectin (~500 kDa)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #f43f5e;"></span>
+                <span>F-actin Stress Fibers</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #2dd4bf;"></span>
+                <span>Vimentin Network</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #fbbf24;"></span>
+                <span>LOX Crosslinks</span>
+              </div>
             </div>
           </div>
         </div>

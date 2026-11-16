@@ -223,7 +223,7 @@ function initPathwayCanvas() {
     // Y-coordinates of layers
     const ecmHeight = 110;
     const membraneY = 160;
-    const nucleusY = height - 70;
+    const nucleusY = height - 85;
     
     // ------------------------------------------------------------------------
     // Layer 1: ECM (Extracellular Matrix) - Collagen I + LOX crosslinks
@@ -361,13 +361,15 @@ function initPathwayCanvas() {
       }
     }
     
-    // Label for Integrin & Plectin
+    // Label for Integrin & Plectin (Right-aligned with margin)
+    pCtx.textAlign = 'right';
     pCtx.font = '500 11px Inter, sans-serif';
     pCtx.fillStyle = state.siIntegrinB1 ? '#ef4444' : '#38bdf8';
-    pCtx.fillText(state.siIntegrinB1 ? 'Integrin β1 [SILENCED by siRNA]' : 'Integrin β1 mechanoreceptors', width - 240, membraneY + 4);
+    pCtx.fillText(state.siIntegrinB1 ? 'Integrin β1 [SILENCED by siRNA]' : 'Integrin β1 mechanoreceptors', width - 20, membraneY + 4);
     
     pCtx.fillStyle = state.shPlectin ? '#ef4444' : '#c084fc';
-    pCtx.fillText(state.shPlectin ? 'Plectin [KNOCKED DOWN by shRNA]' : 'Plectin (~500 kDa cytolinker)', width - 240, membraneY + 65);
+    pCtx.fillText(state.shPlectin ? 'Plectin [KNOCKED DOWN by shRNA]' : 'Plectin (~500 kDa cytolinker)', width - 20, membraneY + 65);
+    pCtx.textAlign = 'left';
     
     // ------------------------------------------------------------------------
     // Layer 4: F-actin Stress Fibers & Intermediate Filaments (Vimentin)
