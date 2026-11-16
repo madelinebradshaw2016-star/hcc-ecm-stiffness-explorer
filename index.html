@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECM Mechanobiology & HCC Migration Explorer | Integrin β1-Plectin-F-actin Axis</title>
+  <meta name="description" content="Interactive mechanobiology simulator and data explorer based on Wang et al., BMC Biology 2025: High matrix stiffness accelerates migration of hepatocellular carcinoma cells through the integrin β1-Plectin-F-actin axis.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       Navigation Bar
+       ======================================================================== -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-wrapper">
+        <div class="brand-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>
+            Mechano-Liver Explorer
+            <span class="brand-badge">BMC Biology 2025</span>
+          </h1>
+          <p>Integrin β1 — Plectin — F-actin Axis in Hepatocellular Carcinoma</p>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#simulator" class="nav-link active">Pathway Simulator</a></li>
+          <li><a href="#scratch" class="nav-link">Scratch Assay</a></li>
+          <li><a href="#microscope" class="nav-link">Confocal SP8</a></li>
+          <li><a href="#data" class="nav-link">Published Data</a></li>
+          <li><a href="#clinical" class="nav-link">Clinical Translation</a></li>
+          <li><a href="#quiz" class="nav-link">Quiz</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="openPaperModalBtn" class="btn-secondary" title="View Paper Methodology & Citation">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          Paper Info
+        </button>
+
+        <button id="themeToggle" class="btn-icon" aria-label="Toggle theme" title="Toggle Light/Dark Theme">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       Main Content
+       ======================================================================== -->
+  <main class="main-wrapper">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h2>How Matrix Stiffness Fuels Hepatocellular Carcinoma Metastasis</h2>
+          <p class="hero-desc">
+            Most hepatocellular carcinoma (HCC) cases arise in cirrhotic livers characterized by extreme collagen crosslinking and matrix stiffening (rising from <strong>~7 kPa</strong> to <strong>53 kPa</strong>). This interactive application explores the mechanosensory signaling axis discovered by <em>Wang et al. (2025)</em>: ECM rigidity drives tumor cell invasion through <strong>Integrin β1</strong> mechanosensing, <strong>Plectin (~500 kDa cytolinker)</strong> upregulation, and accelerated <strong>F-actin stress fiber</strong> polymerization.
+          </p>
+          <div class="hero-citation">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            Wang, Z., Wang, W., Luo, Q. & Song, G. <em>BMC Biology</em> (2025) 23:8. DOI: 10.1186/s12915-025-02113-1
+          </div>
+        </div>
+
+        <div class="hero-quick-stats">
+          <div class="stat-card">
+            <div class="stat-label">Normal Liver Stiffness <span>Physiological</span></div>
+            <div class="stat-value">~7 kPa</div>
+            <div class="stat-subtext">Compliant, baseline Plectin & F-actin</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cirrhotic / HCC Stroma <span>Tumor</span></div>
+            <div class="stat-value" style="color: var(--accent-actin);">53 kPa</div>
+            <div class="stat-subtext">+104% Wound Closure acceleration</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Key Mechanolinker <span>Cytoskeleton</span></div>
+            <div class="stat-value" style="color: var(--accent-purple);">Plectin</div>
+            <div class="stat-subtext">~500 kDa multidomain plakin protein</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">TCGA Gene Correlation <span>Spearman</span></div>
+            <div class="stat-value" style="color: var(--accent-amber);">R = 0.448</div>
+            <div class="stat-subtext">Plectin vs Integrin β1 (P &lt; 0.001)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 1: Interactive Mechanotransduction Pathway & Stiffness Simulator
+         ====================================================================== -->
+    <section id="simulator" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">Interactive Biophysical Engine</span>
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            ECM Stiffness & Mechanotransduction Pathway Simulator
+          </h3>
+          <p>Adjust substrate elasticity and test genetic knockdowns (siRNA, shRNA) and drug inhibitors.</p>
+        </div>
+      </div>
+
+      <div class="grid-layout-simulator">
+        <!-- Controls Column -->
+        <div class="card panel-card">
+          <div class="panel-header">
+            <h4 class="panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+              Microenvironment Setup
+            </h4>
+          </div>
+
+          <!-- Stiffness Slider -->
+          <div class="form-group">
+            <div class="form-label">
+              <span>ECM Elastic Modulus (E)</span>
+              <span id="stiffnessValueDisplay" class="label-sub">53 kPa</span>
+            </div>
+            <div class="slider-container">
+              <input type="range" id="stiffnessSlider" class="stiffness-slider" min="1" max="70" value="53" step="1">
+              <div class="slider-ticks">
+                <span>1 kPa</span>
+                <span>7 kPa (Normal)</span>
+                <span>25 kPa</span>
+                <span>53 kPa (HCC)</span>
+                <span>70 kPa</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Presets -->
+          <div class="form-group">
+            <label class="form-label">Clinical & Experimental Presets</label>
+            <div class="preset-grid">
+              <button class="btn-preset" data-kpa="7">
+                <span>Normal Liver</span>
+                <span>7 kPa (Control)</span>
+              </button>
+              <button class="btn-preset" data-kpa="20">
+                <span>Moderate Fibrosis</span>
+                <span>20 kPa</span>
+              </button>
+              <button class="btn-preset active" data-kpa="53">
+                <span>Cirrhotic / HCC</span>
+                <span>53 kPa (BMC Biol)</span>
+              </button>
+              <button class="btn-preset" data-kpa="65">
+                <span>Dense Desmoplasia</span>
+                <span>65 kPa</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cell Line Selection -->
+          <div class="form-group">
+            <label class="form-label">HCC Cell Line Model</label>
+            <div class="pill-group">
+              <button class="pill-btn cell-line-btn active" data-cell="MHCC-97H">
+                MHCC-97H (High Met)
+              </button>
+              <button class="pill-btn cell-line-btn" data-cell="MHCC-97L">
+                MHCC-97L (Low Met)
+              </button>
+            </div>
+          </div>
+
+          <!-- Molecular Perturbations -->
+          <div class="form-group">
+            <label class="form-label">Genetic & Chemical Perturbations</label>
+            
+            <div class="toggle-wrapper">
+              <div class="toggle-info">
+                <span class="toggle-title">
+                  si-Integrin β1
+                </span>
+                <span class="toggle-desc">siRNA knockdown of Integrin β1 mechanoreceptor</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="siIntegrinSwitch">
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <div class="toggle-wrapper" style="margin-top: 0.5rem;">
+              <div class="toggle-info">
+                <span class="toggle-title">
+                  shPlectin
+                </span>
+                <span class="toggle-desc">Lentiviral shRNA silencing of Plectin cytolinker</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="shPlectinSwitch">
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
+            <div class="toggle-wrapper" style="margin-top: 0.5rem;">
+              <div class="toggle-info">
+                <span class="toggle-title">
+                  + Latrunculin A (Lat-A)
+                </span>
+                <span class="toggle-desc">Direct F-actin monomer sequestering & depolymerizer</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="latASwitch">
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Column: Live Animated Mechanobiology Canvas -->
+        <div class="canvas-container">
+          <canvas id="pathwayCanvas"></canvas>
+          
+          <div class="canvas-overlay-badges">
+            <div class="canvas-badge">
+              <span class="legend-dot" style="background: #38bdf8;"></span>
+              Substrate: <strong id="stiffnessBadge" style="margin-left: 4px;">53 kPa</strong>
+            </div>
+            <div class="canvas-badge">
+              <span class="legend-dot" style="background: #f43f5e;"></span>
+              Dynamic Mechanotransduction Axis
+            </div>
+          </div>
+
+          <div class="canvas-legend">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #38bdf8;"></span>
+              <span>Integrin β1</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #a855f7;"></span>
+              <span>Plectin (~500 kDa)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #f43f5e;"></span>
+              <span>F-actin Stress Fibers</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #2dd4bf;"></span>
+              <span>Vimentin IF Network</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #fbbf24;"></span>
+              <span>LOX Crosslinks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Quantitative Readouts & Biomarkers -->
+        <div class="card panel-card">
+          <div class="panel-header">
+            <h4 class="panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M18 20V10M12 20V4M6 20v-6"/>
+              </svg>
+              Biophysical Readouts
+            </h4>
+          </div>
+
+          <div class="readout-list">
+            <!-- Integrin β1 Level -->
+            <div class="readout-card">
+              <div class="readout-header">
+                <span class="readout-name">Integrin β1 Expression</span>
+                <span id="metricIntegrinVal" class="readout-val" style="color: var(--accent-cyan);">1.65x</span>
+              </div>
+              <div class="progress-track">
+                <div id="metricIntegrinBar" class="progress-fill fill-cyan" style="width: 75%;"></div>
+              </div>
+            </div>
+
+            <!-- Plectin Level -->
+            <div class="readout-card">
+              <div class="readout-header">
+                <span class="readout-name">Plectin Expression</span>
+                <span id="metricPlectinVal" class="readout-val" style="color: var(--accent-purple);">1.60x</span>
+              </div>
+              <div class="progress-track">
+                <div id="metricPlectinBar" class="progress-fill fill-purple" style="width: 72%;"></div>
+              </div>
+            </div>
+
+            <!-- F-actin Polymerization -->
+            <div class="readout-card">
+              <div class="readout-header">
+                <span class="readout-name">F-actin Polymerization Index</span>
+                <span id="metricActinVal" class="readout-val" style="color: var(--accent-actin);">90%</span>
+              </div>
+              <div class="progress-track">
+                <div id="metricActinBar" class="progress-fill fill-actin" style="width: 90%;"></div>
+              </div>
+            </div>
+
+            <!-- Vimentin Intermediate Filaments -->
+            <div class="readout-card">
+              <div class="readout-header">
+                <span class="readout-name">Vimentin Network Coverage</span>
+                <span id="metricVimentinVal" class="readout-val" style="color: var(--accent-vimentin);">85%</span>
+              </div>
+              <div class="progress-track">
+                <div id="metricVimentinBar" class="progress-fill fill-teal" style="width: 85%;"></div>
+              </div>
+            </div>
+
+            <!-- Migration Speed & Closure -->
+            <div class="readout-card" style="background: rgba(56, 189, 248, 0.04); border-color: rgba(56, 189, 248, 0.3);">
+              <div class="readout-header">
+                <span class="readout-name">Leading Edge Migration Velocity</span>
+                <span id="metricSpeedVal" class="readout-val" style="color: var(--accent-cyan);">6.6 μm/h</span>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 2px;">
+                12-Hour Predicted Wound Closure: <strong id="metricClosureVal" style="color: var(--text-main);">31.8%</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+              <button id="exportJsonBtn" class="btn-secondary" style="flex: 1; font-size: 0.75rem; justify-content: center;">
+                Export JSON
+              </button>
+              <button id="exportCsvBtn" class="btn-secondary" style="flex: 1; font-size: 0.75rem; justify-content: center;">
+                Export CSV
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2: Virtual In Vitro Scratch / Wound Healing Assay Simulation
+         ====================================================================== -->
+    <section id="scratch" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">Functional Cell Migration Assay</span>
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+              <line x1="15" y1="3" x2="15" y2="21"/>
+            </svg>
+            In Vitro Wound Healing & Scratch Migration Assay (Ibidi 500 μm Insert)
+          </h3>
+          <p>Recreating the wound closure assays across 7 kPa vs 53 kPa with shPlectin, si-Integrin β1, and Latrunculin A (Figs 2A, 2C, 4C, 6B).</p>
+        </div>
+      </div>
+
+      <!-- Scratch Control Toolbar -->
+      <div class="wound-controls-bar">
+        <div class="btn-group">
+          <button id="scratchPlayBtn" class="btn-primary">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Play
+          </button>
+          <button id="scratchResetBtn" class="btn-secondary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M1 4v6h6M23 20v-6h-6"/>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+            </svg>
+            Reset
+          </button>
+        </div>
+
+        <div class="time-scrubber-wrap">
+          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Incubation Time:</span>
+          <input type="range" id="scratchTimeSlider" class="stiffness-slider" min="0" max="24" value="0" step="0.2" style="flex: 1;">
+          <span id="scratchTimeDisplay" class="time-badge">0.0 h</span>
+        </div>
+
+        <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.75rem;">
+          <span>Active Condition: <strong style="color: var(--accent-cyan);">Live Sync with Slider</strong></span>
+        </div>
+      </div>
+
+      <!-- Scratch Canvas Container -->
+      <div class="card" style="padding: 1rem;">
+        <div style="position: relative; width: 100%; border-radius: var(--radius-md); overflow: hidden;">
+          <canvas id="scratchCanvas"></canvas>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-dim);">
+          <span>Method: Ibidi Culture-Insert 2-well silicone frames on polyacrylamide hydrogels coated with collagen I</span>
+          <span>Quantification: ImageJ thresholded boundary area tracking</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: Interactive Confocal Fluorescence Microscopy Viewer (SP8 Simulator)
+         ====================================================================== -->
+    <section id="microscope" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">High-Resolution Imaging</span>
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"/>
+            </svg>
+            Virtual Leica TCS SP8 DIVE Confocal Microscope
+          </h3>
+          <p>Inspect multi-channel immunofluorescence of F-actin stress fibers, cell nuclei, and vimentin intermediate filaments (Figs 5A-D, 6A).</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Confocal Canvas -->
+        <div class="card" style="padding: 1.25rem;">
+          <div class="confocal-viewport">
+            <canvas id="confocalCanvas"></canvas>
+          </div>
+
+          <!-- Channel Selector Pills -->
+          <div class="channel-toggles-row">
+            <label class="channel-card active-actin">
+              <span style="font-size: 0.8rem; font-weight: 600; color: var(--accent-actin);">Actin-Tracker Red (F-actin)</span>
+              <input type="checkbox" id="channelActinCheck" checked>
+            </label>
+            <label class="channel-card active-dapi">
+              <span style="font-size: 0.8rem; font-weight: 600; color: var(--accent-dapi);">DAPI (Nucleus)</span>
+              <input type="checkbox" id="channelDapiCheck" checked>
+            </label>
+            <label class="channel-card active-vimentin">
+              <span style="font-size: 0.8rem; font-weight: 600; color: var(--accent-vimentin);">Vimentin (Alexa 647)</span>
+              <input type="checkbox" id="channelVimCheck" checked>
+            </label>
+          </div>
+        </div>
+
+        <!-- Line-Scan Fluorescence Intensity Profile -->
+        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="panel-header" style="margin-bottom: 0.5rem;">
+              <h4 class="panel-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M3 3v18h18"/>
+                  <path d="m19 9-5 5-4-4-3 3"/>
+                </svg>
+                Trans-Cellular Line-Scan Intensity Profile
+              </h4>
+              <span class="brand-badge">Crosshair Analysis</span>
+            </div>
+            <p style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Drag the dashed horizontal line on the confocal canvas to measure fluorescence intensity across the cells. Note how <strong>53 kPa high matrix stiffness</strong> produces sharp cortical and longitudinal F-actin peaks representing thick stress fiber bundles, which disappear into diffuse background when treated with <strong>Latrunculin A</strong> or <strong>shPlectin</strong>.
+            </p>
+          </div>
+
+          <div class="intensity-graph-card" style="height: 310px;">
+            <canvas id="lineScanChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: Scientific Data Explorer & TCGA Bioinformatics Analysis
+         ====================================================================== -->
+    <section id="data" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">Empirical Paper Datasets</span>
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+              <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+              <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+            </svg>
+            Research Data & TCGA Clinical Cohort Analysis
+          </h3>
+          <p>Interactive visualizations of patient data, Spearman correlation, qPCR fold-change, and scratch closure assays from Wang et al. (2025).</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom: 1.5rem;">
+        <!-- Chart 1: TCGA Expression -->
+        <div class="card chart-card">
+          <div class="panel-header" style="margin-bottom: 0.5rem;">
+            <h4 class="panel-title">TCGA Cohort: Plectin & Integrin β1 by Tissue & Stiffness</h4>
+            <span style="font-size: 0.75rem; color: var(--text-dim); font-family: var(--font-mono);">Fig 1A, 1B, 3B, 3C</span>
+          </div>
+          <div style="height: 310px;">
+            <canvas id="chartTcgaExpression"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Spearman Correlation -->
+        <div class="card chart-card">
+          <div class="panel-header" style="margin-bottom: 0.5rem;">
+            <h4 class="panel-title">Spearman Correlation: Plectin vs Integrin β1 (HCC Patients)</h4>
+            <span style="font-size: 0.75rem; color: var(--text-dim); font-family: var(--font-mono);">Fig 3A (R=0.448, P&lt;0.001)</span>
+          </div>
+          <div style="height: 310px;">
+            <canvas id="chartSpearmanCorr"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Chart 3: qPCR & Western Blot Fold Changes -->
+        <div class="card chart-card">
+          <div class="panel-header" style="margin-bottom: 0.5rem;">
+            <h4 class="panel-title">Expression Induction: 7 kPa vs 53 kPa Hydrogels</h4>
+            <span style="font-size: 0.75rem; color: var(--text-dim); font-family: var(--font-mono);">Fig 1C, 1D, 3D, 3E</span>
+          </div>
+          <div style="height: 310px;">
+            <canvas id="chartQpcrWestern"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 4: Wound Closure Summary Across Perturbations -->
+        <div class="card chart-card">
+          <div class="panel-header" style="margin-bottom: 0.5rem;">
+            <h4 class="panel-title">Scratch Wound Closure (%) at 12 Hours across Perturbations</h4>
+            <span style="font-size: 0.75rem; color: var(--text-dim); font-family: var(--font-mono);">Fig 2C, 4C, 6B</span>
+          </div>
+          <div style="height: 310px;">
+            <canvas id="chartWoundSummary"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: Mechanobiology Deep-Dive & Clinical Translation
+         ====================================================================== -->
+    <section id="clinical" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">Translational Oncology</span>
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            Mechanotransduction Pathway Mechanics & Clinical Horizons
+          </h3>
+          <p>From liver fibrosis elastography to anti-metastatic therapeutic targeting.</p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(56, 189, 248, 0.15); display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">1</span>
+            Fibrotic Liver Stiffening
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            Chronic hepatitis, NAFLD/MASH, and alcohol abuse activate hepatic stellate cells (HSCs), which secrete massive amounts of Collagen Type I (COL1A1) and Lysyl Oxidase (LOX). LOX enzymatically crosslinks collagen fibrils, transforming pliable liver parenchyma (<strong>~7 kPa</strong>) into stiff, cirrhotic tumor stroma (<strong>>53 kPa</strong>).
+          </p>
+        </div>
+
+        <div class="card">
+          <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(168, 85, 247, 0.15); display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">2</span>
+            The Mechanosensory Relay
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            Stiff ECM exerts elevated isometric tension on cell-surface <strong>Integrin β1</strong> heterodimers. Integrin β1 transmits mechanical cues inward, upregulating <strong>Plectin</strong> expression. Plectin, as a ~500 kDa cytolinker, physically bridges integrins to F-actin bundles and vimentin intermediate filaments, driving actin polymerization, stress fiber formation, and traction forces.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent-actin); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 28px; height: 28px; border-radius: 50%; background: rgba(244, 63, 94, 0.15); display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">3</span>
+            Therapeutic Implications
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            Wang et al. demonstrated that breaking any link in this axis—via <strong>Integrin β1 knockdown</strong>, <strong>Plectin silencing</strong>, or <strong>F-actin depolymerization</strong>—completely abrogates high stiffness-promoted cancer cell migration. This establishes Plectin and matrix-normalizing antifibrotic therapies as high-value avenues to prevent HCC metastasis.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: Interactive Knowledge Check & Quiz
+         ====================================================================== -->
+    <section id="quiz" style="margin-bottom: 3rem;">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <span class="section-tag">Interactive Knowledge Check</span>
+          <h3>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Mechanobiology Mastery Quiz
+          </h3>
+          <p>Test your understanding of the Wang et al. (2025) findings and mechanotransduction mechanisms.</p>
+        </div>
+        <div>
+          <span id="quizScoreBadge" class="brand-badge" style="font-size: 0.85rem; padding: 0.35rem 0.85rem;">
+            0 / 5 Correct (0 Answered)
+          </span>
+        </div>
+      </div>
+
+      <div id="quizContainer" class="quiz-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       Paper Info Modal / Drawer
+       ======================================================================== -->
+  <div id="paperModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="font-size: 1.25rem; font-weight: 700;">Paper Details & Experimental Methodology</h3>
+        <button id="closeModalBtn" class="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div style="font-size: 0.9rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 1.25rem;">
+        <div>
+          <h4 style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem;">Full Citation</h4>
+          <p style="font-family: var(--font-mono); font-size: 0.825rem; background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 6px;">
+            Wang, Z., Wang, W., Luo, Q. & Song, G. High matrix stiffness accelerates migration of hepatocellular carcinoma cells through the integrin β1-Plectin-F-actin axis. <em>BMC Biology</em> <strong>23</strong>, 8 (2025). https://doi.org/10.1186/s12915-025-02113-1
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem;">Polyacrylamide (PA) Hydrogel Fabrication</h4>
+          <p>
+            PA hydrogels with tunable Young's modulus (7 kPa for physiological normal liver, 53 kPa for cirrhotic HCC tumor) were cast by varying acrylamide and bis-acrylamide ratios with ammonium persulfate (APS) and TEMED. Gels were covalently crosslinked with sulfo-SANPAH under 365 nm UV exposure and functionalized with 0.1 mg/mL rat-tail type I collagen (COL1).
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem;">Genetic Silencing Sequences</h4>
+          <ul style="padding-left: 1.25rem; line-height: 1.6; font-family: var(--font-mono); font-size: 0.8rem;">
+            <li><strong>shPlectin-1:</strong> 5'-GCCUCUUCAAUGCCAUCAUTT-3'</li>
+            <li><strong>shPlectin-2:</strong> 5'-GCCAGUACAUCAAGUUCAUTT-3' (Highest knockdown efficiency used for MHCC-97H)</li>
+            <li><strong>si-Integrin β1:</strong> 5'-CCACAGCAGUUGGUUUUGCTT-3'</li>
+            <li><strong>siNC (Non-targeting control):</strong> 5'-UUCUCCGAACGUGUCACGUTT-3'</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem;">Microscopy & Wound Healing Assays</h4>
+          <p>
+            Ibidi Culture-Inserts (500 μm predefined gap) were placed onto PA hydrogels. Wound healing was captured at 0h and 12h, quantified in ImageJ. Immunofluorescence was imaged on a Leica TCS SP8 DIVE confocal microscope using Actin-Tracker Red-Rhodamine, rabbit anti-vimentin (ab92547), and DAPI.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Footer
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <p style="font-weight: 600; color: var(--text-main); margin-bottom: 0.25rem;">
+          ECM Mechanobiology Explorer
+        </p>
+        <p style="font-size: 0.775rem;">
+          Based on Wang et al., <em>BMC Biology</em> (2025). Open Access under CC BY-NC-ND 4.0.
+        </p>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="https://doi.org/10.1186/s12915-025-02113-1" target="_blank" rel="noopener">BMC Biology Article</a></li>
+        <li><a href="https://portal.gdc.cancer.gov" target="_blank" rel="noopener">TCGA Database</a></li>
+        <li><a href="https://github.com" target="_blank" rel="noopener">GitHub Project</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
